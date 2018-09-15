@@ -2,7 +2,7 @@
 
 source /usr/local/bin/common.sh
 
-WORKERS_COUNT=${WORKERS_COUNT:-15}
+WORKERS_COUNT=${WORKERS_COUNT:-5}
 
 for conf in $(printenv| grep -i SOGO_ | cut -d= -f1);do
     update_conf "${conf:5}" "${!conf}"

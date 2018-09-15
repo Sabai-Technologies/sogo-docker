@@ -26,7 +26,7 @@ SOGo supports use of standard protocols such as CalDAV, CardDAV and GroupDAV, as
       * **MYSQL_USER_PASSWORD** (required i **MYSQL_SERVER** is set): password for MYSQL_USER
       * **MYSQL_DATABASE_NAME** (default is sogo): name of the database
     - #### SOGo Configuration #####
-      * **WORKERS_COUNT** (default is 15) : number of SOGo child process that will be used to handle requests.
+      * **WORKERS_COUNT** (default is 5) : number of SOGo child process that will be used to handle requests.
       (useful when using ActiveSync)
       * **SOGO_SogoConfigurationVariable** : set value for SOGo variable *SogoConfigurationVariable*. 
       See the online [documentation](https://sogo.nu/files/docs/SOGoInstallationGuide.html).
