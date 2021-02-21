@@ -1,25 +1,26 @@
-FROM debian:stretch-slim
+FROM debian:buster-slim
 
 ENV \
     LC_ALL=C \
     LANG=C \
     DEBIAN_FRONTEND=noninteractive
 
-COPY ["script", "/usr/local/bin/"]
+EXPOSE 80 20000
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
-    mysql-client \
+    default-mysql-client \
     apt-transport-https \
     ca-certificates \
     gnupg \
     dirmngr
 
 RUN mkdir /usr/share/doc/sogo \
-	&& touch /usr/share/doc/sogo/empty.sh \
-	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-key 0x810273C4 \
-	&& echo "deb http://packages.inverse.ca/SOGo/nightly/4/debian/ stretch stretch" > /etc/apt/sources.list.d/sogo.list \
-	&& apt-get update && apt-get install -y --force-yes \
+        && touch /usr/share/doc/sogo/empty.sh \
+        && gpg --keyserver hkp://keys.gnupg.net --recv-key 0x810273C4 \
+        && gpg --armor --export 0x810273C4 | apt-key add - \
+        && echo "deb http://packages.inverse.ca/SOGo/nightly/5/debian/ buster buster" > /etc/apt/sources.list.d/sogo.list \
+        && apt-get update && apt-get install -y  \
 		sogo \
 		sogo-activesync \
     && apt-get autoremove --purge \
@@ -28,10 +29,7 @@ RUN mkdir /usr/share/doc/sogo \
 	&& rm -rf /var/lib/apt/lists/* /var/log/* /tmp/* /var/tmp/* \
 	&& chmod o+x -R /usr/local/bin/
 
-EXPOSE 20000
 
-VOLUME /usr/lib/GNUstep/SOGo/WebServerResources
+COPY ["script", "/usr/local/bin/"]
 
-USER sogo
-
-CMD ["start.sh"]
+CMD ["/usr/local/bin/start.sh"]
