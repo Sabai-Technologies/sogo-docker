@@ -17,5 +17,11 @@ if [[ -n ${MYSQL_SERVER//[[:blank:]]/} ]]; then
     init_db
 fi
 
+if [[ ${APACHE_ENABLED,,} = true ]]; then
+    source /usr/local/bin/apache.sh
+    configure_apache
+fi
+
 log_info "Launching SOGo"
 su -l sogo -s /bin/bash -c "/usr/sbin/sogod -WOWorkersCount ${WORKERS_COUNT} -WONoDetach YES -WOPort 20000 -WOLogFile - -WOPidFile /tmp/sogo.pid"
+
