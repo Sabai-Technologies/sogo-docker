@@ -22,5 +22,7 @@ check_require() {
 
 update_conf(){
      log_info "setting value for $1"
-     defaults write sogod "$1" "$2"
+     sed -i '$d' /etc/sogo/sogo.conf
+     echo "   $1 = $2;" >> /etc/sogo/sogo.conf
+     echo "}" >> /etc/sogo/sogo.conf
 }
